@@ -1,7 +1,7 @@
 <?php
 namespace Core\Db;
 /**
- * @author Christian K. Hu <chris@microlemur.com>
+ * @author Chris K. Hu <chris@microlemur.com>
  */
 trait Db
 {

@@ -10,12 +10,12 @@ trait Config
     /**
      * @var string
      */
-    private static $path = __DIR__ . "/../config/";
+    private static $confPath = __DIR__ . "/../config/";
 
     /**
      * @var string
      */
-    private $file;
+    private $confFile;
 
     /**
      * @var bool
@@ -25,36 +25,44 @@ trait Config
     /**
      * @var \stdClass
      */
-    protected $data;
+    private static $bucket;
 
     /**
-     * @return Config
+     * @return Caller Class
      * @throws Exception
      */
-    public function config() : Config
+    public function config()
     {
-        if (!static::$loaded) {
-            $this->file = static::$path . "app{$this->env()}.json";
-            if (!file_exists($this->file)) {
-                throw new Exception("Conf File {$this->file} NOT FOUND... ");
+        if (empty(static::$bucket) || !static::$loaded) {
+            $this->confFile = static::$confPath . "app{$this->env()}.json";
+            if (!file_exists($this->confFile)) {
+                throw new Exception("Conf File {$this->confFile} NOT FOUND... ");
             }
-            $this->data = json_decode(file_get_contents($this->file));
-            if (is_null($this->conf)) {
-                throw new Exception("Failed to read CONF File {$this->file} ... ");
+            $data = json_decode(file_get_contents($this->confFile));
+            if (is_null($data)) {
+                throw new Exception("Failed to read CONF File {$this->confFile} ... ");
             }
             static::$loaded = true;
-        }
-        return $this;
-    }
 
-    /**
-     * @param string $key
-     * @return null|\stdClass
-     */
-    public function get(string $key)
-    {
-        if (!static::$loaded) $this->config();
-        return $this->data ?? null;
+            static::$bucket = new class
+            {
+                private $_data;
+
+                public function get(string $key)
+                {
+                    return $this->_data->$key ?? null;
+                }
+
+                public function setData($data)
+                {
+                    $this->_data = $data;
+                }
+            };
+
+            static::$bucket->setData($data);
+        }
+
+        return static::$bucket;
     }
 
     /**
@@ -62,9 +70,9 @@ trait Config
      */
     protected function env() :string
     {
-        $env = $_ENV["LEMUR_FRAMEWORK_ENV"];
+        $env = $_ENV["LEMUR_FRAMEWORK_ENV"] ?? "";
         if (preg_match("/dev/i", $env)) {
-            return "dev";
+            return ".dev";
         }
 
         if (preg_match("/prod/i", $env)) {
@@ -72,8 +80,8 @@ trait Config
         }
 
         if (preg_match("/test/i", $env)) {
-            return "test";
+            return ".test";
         }
-        return "local";
+        return ".local";
     }
 }

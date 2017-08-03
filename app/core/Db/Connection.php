@@ -21,16 +21,16 @@ class Connection
 
     private function __construct()
     {
-        $dbConf = $this->config()->get("db");
 
-        $valid = ( $dsn = $dbConf->get("dsn") ?? false)
-                && ( $user = $dbConf->get("user") ?? false)
-                && ($password = $dbConf->get("password") ?? false);
+        $dbConf = $this->config()->get("db");
+        $valid = ( $dbConf->dsn ?? false)
+            && ( $dbConf->user ?? false)
+            && ( $dbConf->password ?? false);
 
         if (!$valid) {
             throw new Exception("DB Configuration Error ...");
         }
-        $this->connector = new \PDO($dsn,$user,$password);
+        $this->connector = new \PDO($dbConf->dsn,$dbConf->user,$dbConf->password);
     }
 
     /**
@@ -49,6 +49,6 @@ class Connection
      * @return \PDO
      */
     public function connector():\PDO {
-         return $this->connector;
+        return $this->connector;
     }
 }
