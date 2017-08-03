@@ -1,5 +1,6 @@
 <?php
 namespace Core\Http;
+use Core\View\View;
 
 /**
  * @author Chris K. Hu <chris@microlemur.com>
@@ -7,7 +8,15 @@ namespace Core\Http;
 
 abstract class Page
 {
-    protected $contentType = "text/html";
+    /**
+     * @var View
+     */
+    protected $view;
+
+    public function __construct()
+    {
+        $this->view = new View();
+    }
 
     abstract public function execute();
 }
