@@ -1,16 +1,16 @@
 <?php require_once __DIR__."/../app/runner.php";
 
-class Index extends Core\Http\Page {
-
+class Index extends Core\Http\Page
+{
     public function execute()
     {
         $feed = new \Core\View\Feed();
-        $feed->add("projectName", "Lemur NanoFramework")
-            ->add("version" ,0.1);
+        $feed->add("tooManyApiCalls", false)
+            ->add("websiteCurrentState" ,"WEBSITE_IS_ONLINE")
+            ->add("showCaptcha", true);
 
-        (new \Core\View\View())
-            ->compose("index")
-            ->with($feed)->render();
+        $this->view->compose("index")
+                ->with($feed)->render();
     }
 }
 
