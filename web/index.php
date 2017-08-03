@@ -5,11 +5,11 @@ class Index extends Core\Http\Page
     public function execute()
     {
         $feed = new \Core\View\Feed();
-        $feed->add("tooManyApiCalls", false)
-            ->add("websiteCurrentState" ,"WEBSITE_IS_ONLINE")
-            ->add("showCaptcha", true);
+        $feed->add("projectName", "MicroLemur Framework")
+            ->add("version" ,"0.2");
 
-        $this->view->compose("index")
+        (new \Core\View\View())
+                ->compose("index")
                 ->with($feed)->render();
     }
 }
