@@ -1,0 +1,27 @@
+{
+  "name": "lemur",
+  "license": "proprietary",
+  "type": "project",
+  "description": "A PHP Nano framework",
+  "keywords": [
+    "micro framework"
+  ],
+  "author":{
+    "name": "Chris K. Hu",
+    "email": "chris@microlemur.com",
+    "homepage": "https://github.com/Chris-Hu"
+  },
+ "autoload": {
+    "psr-4": {
+      "Core\\": "app/core",
+      "": "src/"
+    }
+  },
+  "require": {
+    "php": ">=7.1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.2",
+    "phploc/phploc": "^4.0"
+  }
+}

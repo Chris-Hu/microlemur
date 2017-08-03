@@ -1,0 +1,7 @@
+{
+  "db" : {
+    "dsn" : "mysql:host=127.0.0.1;dbname=your_database;port=3306;charset=utf8",
+    "user" : "you",
+    "password" : "only_you_know_it"
+  }
+}
