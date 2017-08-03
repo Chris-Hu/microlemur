@@ -1,14 +1,14 @@
 <?php
 namespace Core\View;
 use Core\Exception;
-
+use Core\Constant;
 /**
  * Class View
  * @author Chris K. Hu
  */
 class View implements RendererInterface
 {
-    private $viewPath = __DIR__."/../../../templates/";
+    private $viewPath = Constant::ROOT_DIR."/templates/";
 
     /**
      * @var string

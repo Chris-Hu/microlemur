@@ -1,9 +1,10 @@
 <?php
-namespace Core;
+namespace Core\Conf;
+
 /**
  * @author Chris K. Hu <chris@microlemur.com>
  */
-class Exception extends \Exception
+class Exception extends \Core\Exception
 {
 
 }

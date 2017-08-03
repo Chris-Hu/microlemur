@@ -2,13 +2,15 @@
 declare(strict_types=1);
 
 namespace Core\Db;
+use Core\Conf\Config;
+
 /**
  * Class Connection
  * @author Chris K. Hu <chris@microlemur.com>
  */
 class Connection
 {
-    use \Core\Config;
+    use Config;
     /**
      * @var Connection
      */
@@ -21,11 +23,10 @@ class Connection
 
     private function __construct()
     {
-
-        $dbConf = $this->config()->get("db");
+        $dbConf = $this->configBucket()->get("db");
         $valid = ( $dbConf->dsn ?? false)
-            && ( $dbConf->user ?? false)
-            && ( $dbConf->password ?? false);
+                && ( $dbConf->user ?? false)
+                && ( $dbConf->password ?? false);
 
         if (!$valid) {
             throw new Exception("DB Configuration Error ...");
@@ -49,6 +50,6 @@ class Connection
      * @return \PDO
      */
     public function connector():\PDO {
-        return $this->connector;
+         return $this->connector;
     }
 }
