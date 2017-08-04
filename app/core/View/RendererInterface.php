@@ -9,5 +9,4 @@ interface RendererInterface
 {
     public function compose(string $view);
     public function render();
-    public function renderAsString():string;
 }

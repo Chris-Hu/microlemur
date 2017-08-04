@@ -1,14 +1,16 @@
 <?php
 namespace Core\View;
-use Core\Exception;
+
 use Core\Constant;
+use Core\Exception;
+
 /**
  * Class View
  * @author Chris K. Hu
  */
 class View implements RendererInterface
 {
-    private $viewPath = Constant::ROOT_DIR."/templates/";
+    private $viewPath = Constant::ROOT_DIR . "/templates/";
 
     /**
      * @var string
@@ -35,9 +37,10 @@ class View implements RendererInterface
      * @param string $view
      * @return $this
      */
-    public function compose(string $view) {
+    public function compose(string $view)
+    {
         $this->view = $view;
-        $this->viewFile = $this->viewPath."$view.tpl.php";
+        $this->viewFile = $this->viewPath . "$view.tpl.php";
         if (!file_exists($this->viewFile)) {
             throw new Exception("VIEW File {$this->viewFile} NOT FOUND ...");
         }
@@ -48,12 +51,14 @@ class View implements RendererInterface
      * @param Feed $feed
      * @return $this
      */
-    public function with(Feed $feed) {
+    public function with(Feed $feed)
+    {
         $this->feed = $feed;
         return $this;
     }
 
-    public function path(string $path) {
+    public function path(string $path)
+    {
         $this->viewPath = $path ?? $this->viewPath;
         return $this;
     }
@@ -65,7 +70,7 @@ class View implements RendererInterface
     public function render()
     {
         if (!empty($this->feed)) {
-            $tpl_var = $this->view."_var";
+            $tpl_var = $this->view . "_var";
             $$tpl_var = $this->feed;
         }
 
@@ -79,8 +84,17 @@ class View implements RendererInterface
     /**
      * @return string
      */
-    public function renderAsString():string
+    public function __toString():string
     {
         return $this->viewString;
+    }
+
+    /**
+     * @param $data
+     */
+    public function renderJson($data)
+    {
+        header('Content-Type: application/json');
+        echo is_array($data) ? json_encode($data) : $data;
     }
 }

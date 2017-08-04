@@ -18,9 +18,9 @@ class Runner
      */
     private static $self;
 
-    private function __construct(StorageInterface $storage)
+    private function __construct(StorageInterface $storage = null)
     {
-        $this->storage = $storage;
+        $this->storage = $storage ?? new StandardStorage();
     }
 
     /**
