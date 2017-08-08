@@ -1,7 +1,6 @@
 <?php
+class Security
+{
 
-namespace Core\Security;
-
-class Security {
 
 }

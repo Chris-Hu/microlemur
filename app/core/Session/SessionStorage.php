@@ -7,7 +7,7 @@ namespace Core\Session;
  * @author Chris K. Hu <chris@microlemur.com>
  */
 
-class StandardStorage implements StorageInterface
+class SessionStorage implements SessionInterface
 {
     /**
      * @var bool
@@ -20,7 +20,9 @@ class StandardStorage implements StorageInterface
     public function start(array $options = [])
     {
         if (!static::$isStarted) {
-            session_start($options);
+            if ( session_status() === PHP_SESSION_NONE) {
+                session_start($options);
+            }
             static::$isStarted = true;
         }
     }
@@ -92,5 +94,14 @@ class StandardStorage implements StorageInterface
     public function destroy()
     {
         session_destroy();
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function exists($key):bool
+    {
+        return !empty($this->get($key));
     }
 }

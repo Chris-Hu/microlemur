@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 namespace Core\Db;
-use Core\Conf\Config;
+use Core\Conf\ConfTrait;
 
 /**
  * Class Connection
@@ -10,18 +10,14 @@ use Core\Conf\Config;
  */
 class Connection
 {
-    use Config;
-    /**
-     * @var Connection
-     */
-    private static $self;
+    use ConfTrait;
 
     /**
      * @var \PDO
      */
     private $connector;
 
-    private function __construct()
+    public function __construct()
     {
         $dbConf = $this->configBucket()->get("db");
         $valid = ( $dbConf->dsn ?? false)
@@ -32,18 +28,6 @@ class Connection
             throw new Exception("DB Configuration Error ...");
         }
         $this->connector = new \PDO($dbConf->dsn,$dbConf->user,$dbConf->password);
-    }
-
-    /**
-     * @return Connection
-     */
-    public static function instance()
-    {
-        if ( is_null(static::$self)) {
-            static::$self = new self();
-        }
-
-        return static::$self;
     }
 
     /**
