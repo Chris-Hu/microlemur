@@ -1,13 +1,13 @@
 <?php
 namespace Core;
 
-use Core\Conf\ConfTrait;
+use Core\Conf\ConfigTrait;
 
 /**
  * @author Chris K. Hu <chris@microlemur.com>
  */
 trait App
 {
-    use ConfTrait;
+    use ConfigTrait;
 
 }

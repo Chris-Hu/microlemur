@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 namespace Core\Db;
-use Core\Conf\ConfTrait;
+use Core\Conf\ConfigTrait;
 
 /**
  * Class Connection
@@ -10,7 +10,7 @@ use Core\Conf\ConfTrait;
  */
 class Connection
 {
-    use ConfTrait;
+    use ConfigTrait;
 
     /**
      * @var \PDO

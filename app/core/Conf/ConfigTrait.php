@@ -6,7 +6,7 @@ use Core\IReadOnly;
 /**
  * @author Chris K. Hu <chris@microlemur.com>
  */
-trait ConfTrait
+trait ConfigTrait
 {
     public function configBucket():IReadOnly
     {
