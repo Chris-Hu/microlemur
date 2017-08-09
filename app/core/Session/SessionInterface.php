@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 namespace Core\Session;
-use Core\Storage\IKeyValue;
+use Core\Storage\KeyValueInterface;
 
 /**
  * @author Chris K. Hu <chris@microlemur.com>
  */
-interface SessionInterface extends IKeyValue
+interface SessionInterface extends KeyValueInterface
 {
     public function start(array $options = []);
     public function isStarted():bool;

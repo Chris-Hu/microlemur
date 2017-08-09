@@ -5,7 +5,7 @@ namespace Core\Http;
 /**
  * @author Chris K. Hu <chris@microlemur.com>
  */
-class Request
+class Request implements RequestInterface
 {
     const METHOD_HEAD = 'HEAD';
     const METHOD_GET = 'GET';
@@ -41,6 +41,36 @@ class Request
         }
     }
 
+    /**
+     * Attempts to detect if the current connection is secure through
+     * a few different methods.
+     *
+     * @return bool
+     */
+    public function isSecure(): bool
+    {
+        if ( ! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
+        {
+            return true;
+        }
+        elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+        {
+            return true;
+        }
+        elseif ( ! empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off')
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $value
+     * @param int $filter
+     * @param array $options
+     * @return mixed
+     */
     protected function filter($value, $filter = FILTER_DEFAULT, $options = [])
     {
         static $filters = null;

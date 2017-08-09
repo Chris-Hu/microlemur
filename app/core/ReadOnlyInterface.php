@@ -2,7 +2,7 @@
 
 namespace Core;
 
-interface IReadOnly
+interface ReadOnlyInterface
 {
     public function get(string $key);
 }

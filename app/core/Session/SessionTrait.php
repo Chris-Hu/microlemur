@@ -12,8 +12,8 @@ trait SessionTrait
 {
     public function session():Session
     {
-        return (! InstanceLoader::get(__TRAIT__))
-            ? InstanceLoader::add(__TRAIT__,  new Session() )
-            : InstanceLoader::get(__TRAIT__);
+        return (! InstanceLoader::get(__METHOD__))
+            ? InstanceLoader::add(__METHOD__,  new Session() )
+            : InstanceLoader::get(__METHOD__);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Core\Http;
 
-trait HttpRequest
+trait HttpRequestTrait
 {
     protected function request()
     {

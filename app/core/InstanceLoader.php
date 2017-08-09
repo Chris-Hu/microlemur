@@ -7,6 +7,10 @@ namespace Core;
  */
 abstract class InstanceLoader
 {
+    /**
+     * instances registry
+     * @var array
+     */
     protected static $registry = [];
 
     /**

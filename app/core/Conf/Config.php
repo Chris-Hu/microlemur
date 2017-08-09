@@ -2,8 +2,10 @@
 
 namespace Core\Conf;
 
+use Core\Conf\Props\Security;
 use Core\Constant;
-use Core\IReadOnly;
+use Core\ReadOnlyInterface;
+
 /**
  * @author Chris K. Hu <chris@microlemur.com>
  */
@@ -36,7 +38,7 @@ class Config
             throw new Exception("Failed to read CONF File {$this->confFile} ... ");
         }
 
-        $this->bucket = new class($data) implements IReadOnly
+        $this->bucket = new class($data) implements ReadOnlyInterface
         {
             private $_data;
 
@@ -45,9 +47,22 @@ class Config
                 $this->_data = $data;
             }
 
+            /**
+             * @param string $key
+             * @return mixed
+             * @throws Exception
+             */
             public function get(string $key)
             {
-                return $this->_data->$key ?? null;
+                if (!isset($this->_data->$key)) {
+                    throw new Exception("$key MISSING in Configuration file ... ");
+                }
+                switch ($key) {
+                    case "app.security":
+                        return new Security($this->_data->$key);
+                    default:
+                        return $this->_data->$key;
+                }
             }
         };
     }
@@ -55,7 +70,7 @@ class Config
     /**
      * @return IReadOnly
      */
-    public function bucket():IReadOnly
+    public function bucket():ReadOnlyInterface
     {
         return $this->bucket;
     }

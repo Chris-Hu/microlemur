@@ -1,17 +1,17 @@
 <?php
 namespace Core\Conf;
-
-use Core\IReadOnly;
+use Core\InstanceLoader;
+use Core\ReadOnlyInterface;
 
 /**
  * @author Chris K. Hu <chris@microlemur.com>
  */
 trait ConfigTrait
 {
-    public function configBucket():IReadOnly
+    public function configBucket():ReadOnlyInterface
     {
-         return (! InstanceLoader::get(__TRAIT__))
-            ? InstanceLoader::add(__TRAIT__,  (new Config())->bucket() )
-            : InstanceLoader::get(__TRAIT__);
+         return (! InstanceLoader::get(__METHOD__))
+            ? InstanceLoader::add(__METHOD__,  (new Config())->bucket() )
+            : InstanceLoader::get(__METHOD__);
     }
 }
