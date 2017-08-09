@@ -11,5 +11,7 @@ trait DbTrait
         return (! InstanceLoader::get(__METHOD__))
             ? InstanceLoader::add(__METHOD__,  (new Connection())->connector() )
             : InstanceLoader::get(__METHOD__);
+
     }
+
 }

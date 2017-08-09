@@ -19,15 +19,15 @@ class Connection
 
     public function __construct()
     {
-        $conf = $this->configBucket()->get("app");
-        $valid = ( $conf->db->dsn ?? false)
-                && ( $conf->db->user ?? false)
-                && ( $conf->db->password ?? false);
+        $conf = $this->configBucket()->get("app.db");
+        $valid = ( $conf->dsn ?? false)
+                && ( $conf->user ?? false)
+                && ( $conf->password ?? false);
 
         if (!$valid) {
             throw new Exception("DB Configuration Error ...");
         }
-        $this->connector = new \PDO($conf->db->dsn,$conf->db->user,$conf->db->password);
+        $this->connector = new \PDO($conf->dsn,$conf->user,$conf->password);
     }
 
     /**
